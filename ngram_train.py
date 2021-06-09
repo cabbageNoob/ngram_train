@@ -2,7 +2,7 @@
 Descripttion: 
 Author: cjh (492795090@qq.com)
 Date: 2021-05-29 13:10:42
-LastEditTime: 2021-05-30 10:41:17
+LastEditTime: 2021-06-09 08:49:35
 '''
 import  os
 pwd_path = os.path.abspath(os.path.dirname(__file__))
@@ -34,10 +34,13 @@ class TokenNode:
 
 class NGramLM(ABC):
     """Represent LM as a trie."""
-    def __init__(self, n, tokenizer=None):
+    def __init__(self, n):
         self.n = n
-        self.root = TokenNode("")
         self.model_path = os.path.join(pwd_path, './model/ngram.model')
+        if os.path.exists(self.model_path):
+            self.root = load_model(self.model_path)
+        else:
+            self.root = TokenNode("")
 
     def train(self, file_path):
         """Train LM with the given file."""
